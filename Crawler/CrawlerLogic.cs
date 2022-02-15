@@ -2,12 +2,8 @@
 {
     public class CrawlerLogic
     {
-        public void Parse()
+        public void Parse(string url)
         {
-            ConsoleService service = new ConsoleService();
-
-            var url = service.ReadLine();
-
             WebService web = new WebService();
 
             var html = web.GetHtmlAsString(url);
@@ -20,9 +16,9 @@
 
             var result = parser.ValidationOfLink(links, url);
 
-            foreach(var link in result)
+            foreach (var link in result)
             {
-                service.WriteLine(link);
+                Parse(link);
             }
         } 
     }
