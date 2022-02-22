@@ -11,7 +11,7 @@ namespace Crawler.ConsoleApplication
             var url = service.ReadLine();
             var app = new CrawlerLogic();
 
-            var links = app.Parse(url);
+            var links = app.StartCrawling(url);
 
             service.WriteLine(links.Count().ToString());
 

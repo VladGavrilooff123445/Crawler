@@ -11,8 +11,8 @@ namespace Crawler
         {
             _web = new WebService();
         }
-
-        public List<string> Parse(string url)
+      
+        public List<string> StartCrawling(string url)
         {
             HtmlParser _parser = new HtmlParser(url);
             List<Link> crawledLinks = new List<Link>();
