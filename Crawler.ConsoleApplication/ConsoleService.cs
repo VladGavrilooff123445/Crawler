@@ -4,12 +4,12 @@ namespace Crawler
 {
     public class ConsoleService
     {
-        public void WriteLine(string message)
+        public virtual void WriteLine(string message)
         {
             Console.WriteLine(message);
         }
 
-        public string ReadLine()
+        public virtual string ReadLine()
         {
             return Console.ReadLine();
         }
