@@ -7,13 +7,11 @@ namespace Crawler
     public class HtmlParser
     {
         private List<string> _result;
-        private string _domen;
         private Validator _valid;
 
         public HtmlParser(string domen)
         {
             _result = new List<string>();
-            _domen = domen;
             _valid = new Validator();
         }
 
@@ -62,11 +60,11 @@ namespace Crawler
 
             }
 
-            Uri baseUri = new Uri(_domen);
+            Uri baseUri = new Uri(url);
 
             var validLinks = _valid.MainValidator(_result);
 
-            validLinks = validLinks.Select(a => a)
+            validLinks = validLinks
                 .Where(a => !a.StartsWith("http"))
                 .ToList();
 

@@ -21,7 +21,6 @@ namespace Crawler
             foreach (var symbol in _notValidSymbols)
             {
                 mainResult = mainResult
-                    .Select(a => a)
                     .Where(a => !a.Contains(symbol))
                     .ToList();
             }
@@ -32,7 +31,7 @@ namespace Crawler
 
         private List<string> DeleteDuplicateLinks(List<string> links)
         {
-            _result = links.Select(a => a)
+            _result = links
                 .Distinct()
                 .ToList();
 
