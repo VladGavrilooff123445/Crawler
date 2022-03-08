@@ -9,13 +9,13 @@ namespace Crawler
         private List<string> _result;
         private Validator _valid;
 
-        public HtmlParser(string domen)
+        public HtmlParser()
         {
             _result = new List<string>();
             _valid = new Validator();
         }
 
-        public string[] GetLinksFromHtml(string html, string url)
+        public List<string> GetLinksFromHtml(string html, string url)
         {
             string aOpenTag = "<a ";
             char closeTag = '>';
@@ -44,7 +44,6 @@ namespace Crawler
                 {
                     if (html[i] == endOfLink)
                     {
-                        link += html[i];
                         break;
                     }
                     else
@@ -60,34 +59,39 @@ namespace Crawler
 
             }
 
-            Uri baseUri = new Uri(url);
+            
 
             var validLinks = _valid.MainValidator(_result);
 
-            validLinks = validLinks
-                .Where(a => !a.StartsWith("http"))
-                .ToList();
+            _result = getLinkWithDomen(validLinks, url);
+
+
+            return _result;
+        }
+
+        private List<string> getLinkWithDomen(List<string> links, string url) 
+        {
+            Uri baseUri = new Uri(url);
+
 
             List<string> returnedLinks = new List<string>();
 
-            foreach (var link in validLinks.ToList())
-            {
-                Uri uri = new Uri(link, UriKind.Relative);
+            links = links
+                .Where(a => !a.StartsWith("http"))
+                .ToList();
 
-                if (uri.IsAbsoluteUri)
-                {
-                    continue;
-                }
+            foreach (var link in links)
+            {
+                Uri uri = new Uri(link, UriKind.RelativeOrAbsolute);
 
                 if (Uri.TryCreate(baseUri, link, out Uri result))
                 {
-                    var str = result.AbsoluteUri.Substring(0, result.AbsoluteUri.Length - 3);
+                    var str = result.AbsoluteUri;
                     returnedLinks.Add(str);
                 }
             }
 
-
-            return returnedLinks.ToArray();
+            return returnedLinks;
         }
     }
 }

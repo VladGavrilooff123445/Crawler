@@ -6,15 +6,16 @@ namespace Crawler
     public class CrawlerLogic
     {
         private readonly WebService _web;
+        private readonly HtmlParser _parser;
 
         public CrawlerLogic()
         {
             _web = new WebService();
+            _parser = new HtmlParser();
         }
       
-        public List<string> StartCrawling(string url)
+        public virtual List<string> StartCrawling(string url)
         {
-            HtmlParser _parser = new HtmlParser(url);
             List<Link> crawledLinks = new List<Link>();
 
             Link startLink = new Link() { IsCrawled = false, Url = url };
@@ -23,9 +24,14 @@ namespace Crawler
 
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
-                var item = crawledLinks.FirstOrDefault(a => a.IsCrawled == false);
+                var item = crawledLinks.First(a => a.IsCrawled == false);
 
                 var html = _web.GetHtmlAsString(item.Url);
+
+                if(html == null)
+                {
+                    continue;
+                }
 
                 var Links = _parser.GetLinksFromHtml(html, item.Url);
 

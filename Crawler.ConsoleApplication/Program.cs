@@ -15,10 +15,6 @@ namespace Crawler.ConsoleApplication
 
             service.WriteLine(links.Count().ToString());
 
-            foreach (var link in links)
-            {
-                service.WriteLine(link);
-            }
         }
     }
 }

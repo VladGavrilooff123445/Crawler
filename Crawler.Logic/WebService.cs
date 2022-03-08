@@ -14,8 +14,7 @@ namespace Crawler
             }
             catch (WebException e)
             {
-                string html = "Not Found";
-                return html;
+                return null;
             }
         }
     }
