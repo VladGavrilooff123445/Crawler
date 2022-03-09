@@ -7,20 +7,22 @@ namespace Crawler
     {
         private readonly WebService _web;
         private readonly HtmlParser _parser;
+        private readonly XmlParser _xmlParser; 
 
         public CrawlerLogic()
         {
             _web = new WebService();
             _parser = new HtmlParser();
+            _xmlParser = new XmlParser();
         }
-      
+
         public virtual List<string> StartCrawling(string url)
         {
             List<Link> crawledLinks = new List<Link>();
 
             Link startLink = new Link() { IsCrawled = false, Url = url };
 
-            crawledLinks.Add(startLink);
+            crawledLinks.Add(startLink);  
 
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
@@ -52,6 +54,14 @@ namespace Crawler
                 .ToList();
 
             return result;
+        }
+
+        public List<string> SiteMapCrawling(string url)
+        {
+            var xml = _web.GetXMLAsXmlDoc(url);
+            var links = _xmlParser.Parser(xml);
+
+            return links;
         }
     }
 }
