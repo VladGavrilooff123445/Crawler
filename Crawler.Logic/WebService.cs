@@ -1,39 +1,48 @@
-﻿using System.Net;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace Crawler
 {
     public class WebService
     {
-        public string GetHtmlAsString(string url)
+        private HttpClient _client;
+
+        public WebService()
+        {
+            _client = new HttpClient();
+        }
+
+
+        public async Task<string> GetHtmlAsString(string url)
         {
             try
             {
-                WebClient client = new WebClient();
-                string html = client.DownloadString(url);
-                return html;
+                var response = await _client.GetAsync(url);
+
+                var html = await response.Content.ReadAsStringAsync();
+                    
+                return html;    
             }
-            catch 
+            catch
             {
                 return null;
             }
         }
 
-        public XmlDocument GetXMLAsXmlDoc(string url)
+        public async Task<XmlDocument> GetXMLAsXmlDoc(string url)
         {
             try
             {
                 string sitemapUrl = url + "sitemap.xml";
-                WebClient client = new WebClient();
+                var response = await _client.GetAsync(sitemapUrl);
 
-                client.Encoding = System.Text.Encoding.UTF8;
-                string xml = client.DownloadString(sitemapUrl);
+                var xml = await response.Content.ReadAsStringAsync();
 
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(xml);
+                var xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(xml);
 
-
-                return xmlDoc;
+                return xmlDocument;
             }
             catch 
             {

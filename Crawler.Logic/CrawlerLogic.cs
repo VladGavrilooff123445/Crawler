@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Crawler
 {
@@ -22,7 +23,7 @@ namespace Crawler
 
             Link startLink = new Link() { IsCrawled = false, Url = url };
 
-            crawledLinks.Add(startLink);  
+            crawledLinks.Add(startLink);
 
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
@@ -30,12 +31,14 @@ namespace Crawler
 
                 var html = _web.GetHtmlAsString(item.Url);
 
-                if(html == null)
+                html.Wait();
+
+                if (html == null)
                 {
                     continue;
                 }
 
-                var Links = _parser.GetLinksFromHtml(html, item.Url);
+                var Links = _parser.GetLinksFromHtml(html.Result, item.Url);
 
                 item.IsCrawled = true;
 
@@ -59,8 +62,11 @@ namespace Crawler
         public List<string> SiteMapCrawling(string url)
         {
             var xml = _web.GetXMLAsXmlDoc(url);
-            var links = _xmlParser.Parser(xml);
 
+            xml.Wait();
+
+            var links = _xmlParser.Parser(xml.Result);
+      
             return links;
         }
     }
