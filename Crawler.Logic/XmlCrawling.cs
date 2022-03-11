@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Crawler
 {
@@ -11,13 +12,11 @@ namespace Crawler
             _parser = parser;
             _web = web;
         }
-        public List<string> SiteMapCrawling(string url)
+        public async Task<List<string>> SiteMapCrawling(string url)
         {
-            var xml = _web.GetXMLAsXmlDoc(url);
+            var xml = await _web.GetXMLAsXmlDoc(url);
 
-            xml.Wait();
-
-            var links = _parser.GetLinksFromXml(xml.Result);
+            var links = _parser.GetLinksFromXml(xml);
 
             return links;
         }

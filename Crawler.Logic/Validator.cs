@@ -5,7 +5,7 @@ namespace Crawler
 {
     public class Validator
     {
-        private char[] _notValidSymbols = { '#', '@', '?' };
+        private readonly char[] _notValidSymbols = { '#', '@', '?' };
 
         public List<string> MainValidator(List<string> links)
         {

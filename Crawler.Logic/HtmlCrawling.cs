@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Crawler
 {
@@ -13,11 +14,11 @@ namespace Crawler
             _web = web;
         }
 
-        public List<string> CrawlingByHtml(string url)
+        public async Task<List<string>> CrawlingByHtml(string url)
         {
             List<Link> crawledLinks = new List<Link>();
 
-            Link startLink = new Link() { IsCrawled = false, Url = url };
+            Link startLink = new Link() { Url = url };
 
             crawledLinks.Add(startLink);
 
@@ -25,16 +26,14 @@ namespace Crawler
             {
                 var item = crawledLinks.First(a => a.IsCrawled == false);
 
-                var html = _web.GetHtmlAsString(item.Url);
-
-                html.Wait();
+                var html = await _web.GetHtmlAsString(item.Url);
 
                 if (html == null)
                 {
                     continue;
                 }
 
-                var Links = _parser.GetLinksFromHtml(html.Result, item.Url);
+                var Links = _parser.GetLinksFromHtml(html, item.Url);
 
                 item.IsCrawled = true;
 

@@ -6,17 +6,16 @@ namespace Crawler
 {
     public class HtmlParser
     {
-        private List<string> _result;
         private Validator _valid;
 
-        public HtmlParser()
+        public HtmlParser(Validator valid)
         {
-            _result = new List<string>();
-            _valid = new Validator();
+            _valid = valid;
         }
 
         public List<string> GetLinksFromHtml(string html, string url)
         {
+            List<string> _result = new List<string>();
             string aOpenTag = "<a ";
             char closeTag = '>';
             var endOfLoop = -1;
@@ -38,7 +37,7 @@ namespace Crawler
                 html = html.Substring(indexOfHref, html.Length - indexOfHref);
 
                 var endOfLink = '"';
-                var link = "";
+                var link = string.Empty;
 
                 for (int i = href.Length; i <= html.Length; i++)
                 {
@@ -46,10 +45,8 @@ namespace Crawler
                     {
                         break;
                     }
-                    else
-                    {
-                        link += html[i];
-                    }
+                  
+                    link += html[i];
                 }
 
                 _result.Add(link);
@@ -58,8 +55,6 @@ namespace Crawler
                 html = html.Substring(indexOfACloseTag, html.Length - indexOfACloseTag);
 
             }
-
-            
 
             var validLinks = _valid.MainValidator(_result);
 
