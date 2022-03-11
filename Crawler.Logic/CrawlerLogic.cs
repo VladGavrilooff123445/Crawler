@@ -1,73 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Crawler
 {
     public class CrawlerLogic
     {
-        private readonly WebService _web;
-        private readonly HtmlParser _parser;
-        private readonly XmlParser _xmlParser; 
+        private readonly WebService _webService;
+        private readonly HtmlParser _htmlParser;
+        private readonly XmlParser _xmlParser;
 
         public CrawlerLogic()
         {
-            _web = new WebService();
-            _parser = new HtmlParser();
+            _webService = new WebService();
+            _htmlParser = new HtmlParser();
             _xmlParser = new XmlParser();
         }
 
-        public virtual List<string> StartCrawling(string url)
+        public List<string> StartCrawling(string url)
         {
-            List<Link> crawledLinks = new List<Link>();
+            HtmlCrawling htmlCrawling = new HtmlCrawling(_htmlParser, _webService);
+            XmlCrawling xmlCrawling = new XmlCrawling(_xmlParser, _webService);
 
-            Link startLink = new Link() { IsCrawled = false, Url = url };
+            var resultHtml = htmlCrawling.CrawlingByHtml(url);
+            var resultXml = xmlCrawling.SiteMapCrawling(url);
 
-            crawledLinks.Add(startLink);
+            resultXml.AddRange(resultHtml);
 
-            while (crawledLinks.Any(a => a.IsCrawled == false))
-            {
-                var item = crawledLinks.First(a => a.IsCrawled == false);
-
-                var html = _web.GetHtmlAsString(item.Url);
-
-                html.Wait();
-
-                if (html == null)
-                {
-                    continue;
-                }
-
-                var Links = _parser.GetLinksFromHtml(html.Result, item.Url);
-
-                item.IsCrawled = true;
-
-                foreach (var link in Links)
-                {
-                    if (!crawledLinks.Any(a => (a.Url == link)))
-                    {
-                        Link newLink = new Link() { IsCrawled = false, Url = link };
-                        crawledLinks.Add(newLink);
-                    }
-                }
-            }
-
-            var result = crawledLinks
-                .Select(a => a.Url)
-                .ToList();
+            var result = resultXml.Distinct().ToList();
 
             return result;
-        }
-
-        public List<string> SiteMapCrawling(string url)
-        {
-            var xml = _web.GetXMLAsXmlDoc(url);
-
-            xml.Wait();
-
-            var links = _xmlParser.Parser(xml.Result);
-      
-            return links;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -16,38 +17,29 @@ namespace Crawler
 
         public async Task<string> GetHtmlAsString(string url)
         {
-            try
-            {
-                var response = await _client.GetAsync(url);
+            var response = await _client.GetAsync(url);
 
-                var html = await response.Content.ReadAsStringAsync();
-                    
-                return html;    
-            }
-            catch
+            if (response != null && response.StatusCode == HttpStatusCode.OK)
             {
-                return null;
+                var html = await response.Content.ReadAsStringAsync();
+
+                return html;
             }
+
+            return null;    
         }
 
         public async Task<XmlDocument> GetXMLAsXmlDoc(string url)
         {
-            try
-            {
-                string sitemapUrl = url + "sitemap.xml";
-                var response = await _client.GetAsync(sitemapUrl);
+            string sitemapUrl = url + "sitemap.xml";
+            var response = await _client.GetAsync(sitemapUrl);
 
-                var xml = await response.Content.ReadAsStringAsync();
+            var xml = await response.Content.ReadAsStringAsync();
 
-                var xmlDocument = new XmlDocument();
-                xmlDocument.LoadXml(xml);
+            var xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(xml);
 
-                return xmlDocument;
-            }
-            catch 
-            {
-                return null;
-            }
+            return xmlDocument;
         }
     }
 }

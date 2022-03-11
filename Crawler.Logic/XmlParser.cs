@@ -5,7 +5,7 @@ namespace Crawler
 {
     public class XmlParser
     {
-        public List<string> Parser (XmlDocument xmlDoc)
+        public List<string> GetLinksFromXml (XmlDocument xmlDoc)
         {
             List<string> result = new List<string>();
             XmlNodeList xmlSitemapList = xmlDoc.GetElementsByTagName("loc");
