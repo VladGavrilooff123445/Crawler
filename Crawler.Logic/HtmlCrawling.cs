@@ -14,7 +14,7 @@ namespace Crawler
             _web = web;
         }
 
-        public async Task<List<string>> CrawlingByHtml(string url)
+        public virtual async Task<List<string>> CrawlingByHtml(string url)
         {
             List<Link> crawledLinks = new List<Link>();
 

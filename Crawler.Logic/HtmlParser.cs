@@ -13,7 +13,7 @@ namespace Crawler
             _valid = valid;
         }
 
-        public List<string> GetLinksFromHtml(string html, string url)
+        public virtual List<string> GetLinksFromHtml(string html, string url)
         {
             List<string> _result = new List<string>();
             string aOpenTag = "<a ";

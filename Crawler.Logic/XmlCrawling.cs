@@ -12,7 +12,7 @@ namespace Crawler
             _parser = parser;
             _web = web;
         }
-        public async Task<List<string>> SiteMapCrawling(string url)
+        public virtual async Task<List<string>> SiteMapCrawling(string url)
         {
             var xml = await _web.GetXMLAsXmlDoc(url);
 

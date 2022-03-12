@@ -29,7 +29,7 @@ namespace Crawler
             return null;    
         }
 
-        public async Task<XmlDocument> GetXMLAsXmlDoc(string url)
+        public virtual async Task<XmlDocument> GetXMLAsXmlDoc(string url)
         {
             string sitemapUrl = url + "sitemap.xml";
             var response = await _client.GetAsync(sitemapUrl);
