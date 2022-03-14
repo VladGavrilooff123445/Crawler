@@ -15,7 +15,7 @@ namespace Crawler
         }
 
 
-        public async Task<string> GetHtmlAsString(string url)
+        public virtual async Task<string> GetHtmlAsString(string url)
         {
             var response = await _client.GetAsync(url);
 
