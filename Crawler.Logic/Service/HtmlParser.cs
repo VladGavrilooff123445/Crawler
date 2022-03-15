@@ -16,6 +16,20 @@ namespace Crawler
         public virtual List<string> GetLinksFromHtml(string html, string url)
         {
             List<string> _result = new List<string>();
+
+            var linksFromHtml = ParseLink(html);
+            var validLinks = _valid.MainValidator(linksFromHtml);
+
+            _result = getLinkWithDomen(validLinks, url);
+
+
+            return _result;
+        }
+
+
+        private List<string> ParseLink(string html)
+        {
+            List<string> links = new List<string>();
             string aOpenTag = "<a ";
             char closeTag = '>';
             var endOfLoop = -1;
@@ -45,25 +59,19 @@ namespace Crawler
                     {
                         break;
                     }
-                  
+
                     link += html[i];
                 }
 
-                _result.Add(link);
+                links.Add(link);
 
                 var indexOfACloseTag = html.IndexOf(closeTag);
                 html = html.Substring(indexOfACloseTag, html.Length - indexOfACloseTag);
 
             }
 
-            var validLinks = _valid.MainValidator(_result);
-
-            _result = getLinkWithDomen(validLinks, url);
-
-
-            return _result;
+            return links;
         }
-
         private List<string> getLinkWithDomen(List<string> links, string url) 
         {
             Uri baseUri = new Uri(url);

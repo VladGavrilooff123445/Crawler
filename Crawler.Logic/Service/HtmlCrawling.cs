@@ -22,6 +22,17 @@ namespace Crawler
 
             crawledLinks.Add(startLink);
 
+            var links = await CrawlingLogic(crawledLinks);
+
+            var result = crawledLinks
+                .Select(a => a.Url)
+                .ToList();
+
+            return result;
+        }
+
+        private async Task<List<Link>> CrawlingLogic(List<Link> crawledLinks)
+        {
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
                 var item = crawledLinks.First(a => a.IsCrawled == false);
@@ -30,6 +41,11 @@ namespace Crawler
 
                 if (html == null)
                 {
+                    if(crawledLinks.Count == 1)
+                    {
+                        break;
+                    }
+
                     continue;
                 }
 
@@ -47,11 +63,7 @@ namespace Crawler
                 }
             }
 
-            var result = crawledLinks
-                .Select(a => a.Url)
-                .ToList();
-
-            return result;
+            return crawledLinks;
         }
     }
 }

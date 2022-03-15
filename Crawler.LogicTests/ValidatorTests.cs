@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
-using Moq;
 using System.Collections.Generic;
 
 namespace Crawler.LogicTests
 {
-    public class ValidatorTest
+    public class ValidatorTests
     {
         [Test]
         public void MainValidator_ShouldResturnValidLinks()
@@ -20,6 +19,21 @@ namespace Crawler.LogicTests
             var result = validator.MainValidator(data);
 
             Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void MainValidator_ShouldReturnEmptyListIfAllNotValid()
+        {
+            var validator = new Validator();
+            var data = new List<string>();
+            data.Add("#example");
+            data.Add("@host/site");
+            data.Add("?rest/site");
+            
+
+            var result = validator.MainValidator(data);
+
+            Assert.IsEmpty(result);
         }
     }
 }
