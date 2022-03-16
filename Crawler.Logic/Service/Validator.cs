@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler
+namespace Crawler.Logic
 {
     public class Validator
     {
@@ -9,14 +9,11 @@ namespace Crawler
 
         public virtual List<string> MainValidator(List<string> links)
         {
-            List<string> mainResult = new List<string>();
-
-            mainResult = links
+            var mainResult = links
                 .Distinct()
                 .Where(a => !_notValidSymbols.Any(a.Contains))
                 .ToList();
             
-
             return mainResult;
         }    
     }

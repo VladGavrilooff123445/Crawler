@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler
+namespace Crawler.Logic
 {
     public class HtmlParser
     {
-        private Validator _valid;
+        private readonly Validator _valid;
 
         public HtmlParser(Validator valid)
         {
@@ -15,19 +15,17 @@ namespace Crawler
 
         public virtual List<string> GetLinksFromHtml(string html, string url)
         {
-            List<string> _result = new List<string>();
-
-            var linksFromHtml = ParseLink(html);
+            var linksFromHtml = GetLink(html);
             var validLinks = _valid.MainValidator(linksFromHtml);
 
-            _result = getLinkWithDomen(validLinks, url);
+            var result = GetLinkWithDomain(validLinks, url);
 
 
-            return _result;
+            return result;
         }
 
 
-        private List<string> ParseLink(string html)
+        private List<string> GetLink(string html)
         {
             List<string> links = new List<string>();
             string aOpenTag = "<a ";
@@ -72,7 +70,7 @@ namespace Crawler
 
             return links;
         }
-        private List<string> getLinkWithDomen(List<string> links, string url) 
+        private List<string> GetLinkWithDomain(List<string> links, string url) 
         {
             Uri baseUri = new Uri(url);
 

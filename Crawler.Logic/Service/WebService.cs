@@ -3,11 +3,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Crawler
+namespace Crawler.Logic
 {
     public class WebService
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         public WebService()
         {
@@ -33,10 +33,9 @@ namespace Crawler
         {
             string sitemapUrl = url + "sitemap.xml";
             var response = await _client.GetAsync(sitemapUrl);
-
             var xml = await response.Content.ReadAsStringAsync();
-
             var xmlDocument = new XmlDocument();
+
             xmlDocument.LoadXml(xml);
 
             return xmlDocument;

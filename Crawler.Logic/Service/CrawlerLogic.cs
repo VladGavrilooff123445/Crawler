@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Crawler
+namespace Crawler.Logic
 {
     public class CrawlerLogic
     {
@@ -15,16 +15,18 @@ namespace Crawler
             _xmlCrawling = xmlCrawling;
         }
 
-        public virtual async Task<List<string>> StartCrawling(string url)
+        public virtual async Task<List<string>> StartCrawlingByHtml(string url)
         {
-            var resultHtml = await _htmlCrawling.CrawlingByHtml(url);
+            var resultHtml = await _htmlCrawling.CrawlingByHtml(url);    
+
+            return resultHtml;
+        }
+
+        public virtual async Task<List<string>> StartCrawlingByXml(string url)
+        {
             var resultXml = await _xmlCrawling.SiteMapCrawling(url);
 
-            resultXml.AddRange(resultHtml);
-
-            var result = resultXml.Distinct().ToList();
-
-            return result;
+            return resultXml;
         }
     }
 }

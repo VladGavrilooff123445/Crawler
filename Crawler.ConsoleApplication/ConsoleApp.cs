@@ -1,33 +1,52 @@
-﻿using System.Threading.Tasks;
+﻿using Crawler.Logic;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 
 namespace Crawler.ConsoleApplication
 {
     public class ConsoleApp
     {
+        private readonly ConsoleService _service;
 
-      public async Task Run()
-      {
+        public ConsoleApp()
+        {
+            _service = new ConsoleService();
+        }
+        public async Task Run()
+        {
             WebService webService = new WebService();
             Validator validator = new Validator();
             HtmlParser htmlParser = new HtmlParser(validator);
             XmlParser xmlParser = new XmlParser();
             HtmlCrawling htmlCrawling = new HtmlCrawling(htmlParser, webService);
             XmlCrawling xmlCrawling = new XmlCrawling(xmlParser, webService);
-            ConsoleService service = new ConsoleService();
 
-            var url = service.ReadLine();
+            var url = _service.ReadLine();
             var app = new CrawlerLogic(htmlCrawling, xmlCrawling);
+            var linksHtml = await app.StartCrawlingByHtml(url);
 
-            var links = await app.StartCrawling(url);
+            _service.WriteLine(linksHtml.Count.ToString());
 
-            service.WriteLine(links.Count.ToString());
-            var i = 1;
+            GetAllLinks(linksHtml);
+
+            var linksXml = await app.StartCrawlingByXml(url);
+
+            _service.WriteLine(linksXml.Count.ToString());
+
+            GetAllLinks(linksXml);
+        }
+        
+
+        private void GetAllLinks(List<string> links)
+        {
+            var count = 1;  
+
             foreach (var link in links)
             {
-                service.WriteLine($"{i})" + " " + link.ToString());
-                i++;
+                _service.WriteLine($"{count.ToString()}) {link}");
+                count++;
             }
-      }
-        
+        }
     }
 }
