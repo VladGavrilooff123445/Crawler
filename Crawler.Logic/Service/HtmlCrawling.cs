@@ -9,6 +9,7 @@ namespace Crawler.Logic
     {
         private readonly WebService _web;
         private readonly HtmlParser _parser;
+
         public HtmlCrawling(HtmlParser parser, WebService web)
         {
             _parser = parser;

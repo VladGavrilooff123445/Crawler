@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Crawler.Logic.Controler;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Crawler.Logic
 {
-    public class CrawlerLogic
+    public class CrawlerLogic : ICrawlerLogic
     {
         private readonly HtmlCrawling _htmlCrawling;
         private readonly XmlCrawling _xmlCrawling;
