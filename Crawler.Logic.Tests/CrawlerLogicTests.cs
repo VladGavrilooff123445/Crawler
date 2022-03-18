@@ -2,13 +2,14 @@
 using Moq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Crawler.Logic;
 
 namespace Crawler.LogicTests
 {
     public class CrawlerLogicTests
     {
         [Test]
-        public async Task StartCrawling_ShouldReturnAllLinks()
+        public async Task StartCrawlingByXml_ShouldReturnAllLinks()
         {
             var webMock = new Mock<WebService>();
             var validMock = new Mock<Validator>();
@@ -32,7 +33,7 @@ namespace Crawler.LogicTests
 
             var crawler = new CrawlerLogic(htmlCrawlingMock.Object, xmlCrawlingMock.Object);
 
-            var result = await crawler.StartCrawling("http://example.com/");
+            var result = await crawler.StartCrawlingByXml("http://example.com/");
 
             Assert.AreEqual(result.Count, 4);
 

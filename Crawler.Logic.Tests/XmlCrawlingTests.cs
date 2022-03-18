@@ -3,6 +3,7 @@ using Moq;
 using System.Xml;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Crawler.Logic;
 
 namespace Crawler.LogicTests
 {

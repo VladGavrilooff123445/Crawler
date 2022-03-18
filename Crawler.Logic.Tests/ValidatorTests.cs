@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Crawler.Logic;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace Crawler.LogicTests

@@ -2,6 +2,7 @@
 using Moq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Crawler.Logic;
 
 namespace Crawler.LogicTests
 {
