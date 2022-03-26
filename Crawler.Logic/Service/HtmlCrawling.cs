@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using Crawler.Logic.Model;
 
-namespace Crawler.Logic
+namespace Crawler.Logic.Service
 {
     public class HtmlCrawling
     {
@@ -16,31 +16,28 @@ namespace Crawler.Logic
             _web = web;
         }
 
-        public virtual async Task<List<string>> CrawlingByHtml(string url)
+        public virtual async Task<List<Link>> CrawlingByHtml(string url)
         {
             List<Link> crawledLinks = new List<Link>();
             Link startLink = new Link() { Url = url };
             crawledLinks.Add(startLink);
 
             crawledLinks = await CrawlingLogic(crawledLinks);
-            var result = crawledLinks
-                .Select(a => a.Url + " - " + a.Timing.ToString())
-                .ToList();
+            
 
-            return result;
+            return crawledLinks;
         }
 
+ 
         private async Task<List<Link>> CrawlingLogic(List<Link> crawledLinks)
         {
-            Stopwatch timer = new Stopwatch();
             var onlyOneElement = 1;
-
-            timer.Start();
 
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
                 var item = crawledLinks.First(a => a.IsCrawled == false);
                 var html = await _web.GetHtmlAsString(item.Url);
+                var time = await _web.GetResponseTime(item.Url);
 
                 if (html == null)
                 {
@@ -60,12 +57,11 @@ namespace Crawler.Logic
                 {
                     if (!crawledLinks.Any(a => (a.Url == link)))
                     {
-                        Link newLink = new Link() { IsCrawled = false, Url = link, Timing = timer.ElapsedMilliseconds };
+                        Link newLink = new Link() { IsCrawled = false, Url = link, Time = time };
                         crawledLinks.Add(newLink);
                     }
                 }
             }
-            timer.Stop();
 
             return crawledLinks;
         }

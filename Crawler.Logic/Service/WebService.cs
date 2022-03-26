@@ -1,19 +1,21 @@
 ﻿using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Xml;
 
-namespace Crawler.Logic
+namespace Crawler.Logic.Service
 {
     public class WebService
     {
         private readonly HttpClient _client;
+        private readonly TimeResponse _timeResponse;
 
-        public WebService()
+        public WebService(Stopwatch timer)
         {
             _client = new HttpClient();
+            _timeResponse = new TimeResponse(timer);
         }
-
 
         public virtual async Task<string> GetHtmlAsString(string url)
         {
@@ -27,6 +29,21 @@ namespace Crawler.Logic
             }
 
             return null;    
+        }
+
+        public async Task<string> GetResponseTime(string url)
+        {
+            var response = await _client.GetAsync(url);
+
+            if (response != null && response.StatusCode == HttpStatusCode.OK)
+            {
+                var time = _timeResponse.SetTime().ToString();
+                _timeResponse.Stop();
+
+                return time;
+            }
+
+            return null;
         }
 
         public virtual async Task<XmlDocument> GetXMLAsXmlDoc(string url)

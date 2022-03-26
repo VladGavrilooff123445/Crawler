@@ -2,7 +2,7 @@
 using Moq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Crawler.Logic;
+using Crawler.Logic.Service;
 
 namespace Crawler.LogicTests
 {
@@ -26,9 +26,9 @@ namespace Crawler.LogicTests
 
             var crawler = new CrawlerLogic(htmlCrawlingMock.Object, xmlCrawlingMock.Object);
 
-            var result = await crawler.StartCrawlingByXml("http://example.com/");
+            
 
-            Assert.AreEqual(result.Count, 2);
+           
 
         }
     }

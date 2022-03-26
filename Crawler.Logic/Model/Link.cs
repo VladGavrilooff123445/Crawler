@@ -1,4 +1,4 @@
-﻿namespace Crawler.Logic
+﻿namespace Crawler.Logic.Model
 {
     public class Link
     {
@@ -6,6 +6,6 @@
 
         public bool IsCrawled { get; set; }
 
-        public long Timing { get; set; }
+        public string Time { get; set; }
     }
 }

@@ -1,9 +1,9 @@
-﻿using Crawler.Logic;
-using Crawler.Logic.Controler;
+﻿using Crawler.Logic.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Crawler.ConsoleApplication
 {
@@ -22,7 +22,8 @@ namespace Crawler.ConsoleApplication
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddScoped<ICrawlerLogic, CrawlerLogic>();
+                        services.AddScoped<CrawlerLogic>();
+                        services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();
                         services.AddScoped<HtmlCrawling>();
                         services.AddScoped<XmlCrawling>();
@@ -30,6 +31,8 @@ namespace Crawler.ConsoleApplication
                         services.AddScoped<XmlParser>();
                         services.AddScoped<Validator>();
                         services.AddScoped<WebService>();
+                        services.AddScoped<TimeResponse>();
+                        services.AddScoped<Stopwatch>();
                     }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
     }
 

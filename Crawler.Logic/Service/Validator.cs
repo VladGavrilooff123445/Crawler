@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler.Logic
+namespace Crawler.Logic.Service
 {
     public class Validator
     {

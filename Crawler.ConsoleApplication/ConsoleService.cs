@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Crawler
+namespace Crawler.ConsoleApplication
 {
     public class ConsoleService
     {

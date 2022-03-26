@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Moq;
 using System.Collections.Generic;
-using Crawler.Logic;
+using Crawler.Logic.Service;
 
 namespace Crawler.LogicTests
 {

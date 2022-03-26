@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml;
-using System.Diagnostics;
 
-namespace Crawler.Logic
+namespace Crawler.Logic.Service
 {
     public class XmlParser
     {
-        public virtual List<string> GetLinksFromXml (XmlDocument xmlDoc)
+        private readonly WebService _web;
+
+        public XmlParser(WebService web)
         {
-            Stopwatch timer = new Stopwatch();
+            _web = web;
+        }
+
+        public virtual async Task<List<string>> GetLinksFromXml (XmlDocument xmlDoc)
+        {
             List<string> result = new List<string>();
             XmlNodeList xmlSitemapList = xmlDoc.GetElementsByTagName("loc");
-
-            timer.Start();
-
+            
             foreach (XmlNode xmlSitemapNode in xmlSitemapList)
             {
-                result.Add(xmlSitemapNode.FirstChild.InnerText + " - " + $"{timer.ElapsedMilliseconds}");
+                string time = await _web.GetResponseTime(xmlSitemapNode.FirstChild.InnerText);
+                result.Add(xmlSitemapNode.FirstChild.InnerText + " - " + time);
             }
-
-            timer.Stop();
 
             return result;
         }

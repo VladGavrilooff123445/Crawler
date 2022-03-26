@@ -1,4 +1,4 @@
-﻿using Crawler.Logic;
+﻿using Crawler.Logic.Service;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Xml;

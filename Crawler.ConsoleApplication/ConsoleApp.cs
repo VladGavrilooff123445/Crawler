@@ -1,5 +1,7 @@
-﻿using Crawler.Logic.Controler;
+﻿using Crawler.Logic.Service;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -8,29 +10,37 @@ namespace Crawler.ConsoleApplication
     public class ConsoleApp
     {
         private readonly ConsoleService _service;
-        private ICrawlerLogic _crawlerLogic;
-
-        public ConsoleApp(ICrawlerLogic crawlerLogic)
+        private readonly CrawlerLogic _crawlerLogic;
+        
+        public ConsoleApp(CrawlerLogic crawlerLogic, ConsoleService service)
         {
+            _service = service;
             _crawlerLogic = crawlerLogic;
-            _service = new ConsoleService();
         }
+
         public async Task Run()
         {
             var url = _service.ReadLine();
             var linksHtml = await _crawlerLogic.StartCrawlingByHtml(url);
+            var linksXml = await _crawlerLogic.StartCrawlingByXml(url, linksHtml);
 
-            _service.WriteLine(linksHtml.Count.ToString());
+            _service.WriteLine("\n Unique links from web page: \n");
 
-            GetAllLinks(linksHtml);
+            var uniqHtml = _crawlerLogic.GetUniqueLinksFromHtml(linksHtml, linksXml);
+            GetAllLinks(uniqHtml);
 
-            var linksXml = await _crawlerLogic.StartCrawlingByXml(url);
+            _service.WriteLine("\n Unique links from sitemap: \n");
 
-            _service.WriteLine(linksXml.Count.ToString());
+            var uniqXml = _crawlerLogic.GetUniqueLinksFromXml(linksHtml, linksXml);
+            GetAllLinks(uniqXml);
 
-            GetAllLinks(linksXml);
+            _service.WriteLine("\n All links from sitemap and web page: \n");
+
+            var allLinks = _crawlerLogic.GetAllLinksFromSite(linksHtml, linksXml);
+            GetAllLinks(allLinks);
+
+            Environment.Exit(0);
         }
-        
 
         private void GetAllLinks(List<string> links)
         {
@@ -38,7 +48,13 @@ namespace Crawler.ConsoleApplication
 
             foreach (var link in links)
             {
-                _service.WriteLine($"{count.ToString()}) {link}");
+                if(count == links.Count())
+                {
+                    _service.WriteLine($"{count}) {link} \n");
+                    continue;
+                }
+
+                _service.WriteLine($"{count}) {link}");
                 count++;
             }
         }

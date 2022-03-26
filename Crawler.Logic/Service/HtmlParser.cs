@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler.Logic
+namespace Crawler.Logic.Service
 {
     public class HtmlParser
     {
@@ -15,17 +15,15 @@ namespace Crawler.Logic
 
         public virtual List<string> GetLinksFromHtml(string html, string url)
         {
-            var linksFromHtml = GetLink(html);
+            var linksFromHtml = GetLinkFromPage(html);
             var validLinks = _valid.MainValidator(linksFromHtml);
-
             var result = GetLinkWithDomain(validLinks, url);
-
 
             return result;
         }
 
 
-        private List<string> GetLink(string html)
+        private List<string> GetLinkFromPage(string html)
         {
             List<string> links = new List<string>();
             string aOpenTag = "<a ";
@@ -70,6 +68,7 @@ namespace Crawler.Logic
 
             return links;
         }
+
         private List<string> GetLinkWithDomain(List<string> links, string url) 
         {
             Uri baseUri = new Uri(url);
