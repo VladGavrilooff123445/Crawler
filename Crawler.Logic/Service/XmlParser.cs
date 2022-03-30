@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Crawler.Logic.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -6,22 +7,24 @@ namespace Crawler.Logic.Service
 {
     public class XmlParser
     {
-        private readonly WebService _web;
+        private readonly TimeEvaluate _time;
 
-        public XmlParser(WebService web)
+        public XmlParser(TimeEvaluate time)
         {
-            _web = web;
+            _time = time;
         }
 
-        public virtual async Task<List<string>> GetLinksFromXml (XmlDocument xmlDoc)
+        public virtual async Task<List<Link>> GetLinksFromXml (XmlDocument xmlDoc)
         {
-            List<string> result = new List<string>();
+            List<Link> result = new List<Link>();
             XmlNodeList xmlSitemapList = xmlDoc.GetElementsByTagName("loc");
             
             foreach (XmlNode xmlSitemapNode in xmlSitemapList)
             {
-                string time = await _web.GetResponseTime(xmlSitemapNode.FirstChild.InnerText);
-                result.Add(xmlSitemapNode.FirstChild.InnerText + " - " + time);
+                string timer = await _time.GetResponseTime(xmlSitemapNode.FirstChild.InnerText);
+                Link link = new Link() { Url = xmlSitemapNode.FirstChild.InnerText, Time = timer };
+
+                result.Add(link);
             }
 
             return result;

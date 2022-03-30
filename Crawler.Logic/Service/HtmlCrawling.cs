@@ -7,11 +7,15 @@ namespace Crawler.Logic.Service
 {
     public class HtmlCrawling
     {
+        private readonly TimeResponse _timeResponse;
+        private readonly TimeEvaluate _timeEvaluate;
         private readonly WebService _web;
         private readonly HtmlParser _parser;
 
-        public HtmlCrawling(HtmlParser parser, WebService web)
+        public HtmlCrawling(HtmlParser parser, WebService web, TimeEvaluate timeEvaluate, TimeResponse timeResponse)
         {
+            _timeResponse = timeResponse;
+            _timeEvaluate = timeEvaluate;
             _parser = parser;
             _web = web;
         }
@@ -31,13 +35,15 @@ namespace Crawler.Logic.Service
  
         private async Task<List<Link>> CrawlingLogic(List<Link> crawledLinks)
         {
+            _timeResponse.Start();
+
             var onlyOneElement = 1;
 
             while (crawledLinks.Any(a => a.IsCrawled == false))
             {
                 var item = crawledLinks.First(a => a.IsCrawled == false);
                 var html = await _web.GetHtmlAsString(item.Url);
-                var time = await _web.GetResponseTime(item.Url);
+                var time = await _timeEvaluate.GetResponseTime(item.Url);
 
                 if (html == null)
                 {
@@ -62,6 +68,8 @@ namespace Crawler.Logic.Service
                     }
                 }
             }
+
+            _timeResponse.Stop();
 
             return crawledLinks;
         }

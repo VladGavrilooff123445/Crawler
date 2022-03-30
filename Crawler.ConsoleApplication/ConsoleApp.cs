@@ -10,33 +10,38 @@ namespace Crawler.ConsoleApplication
     public class ConsoleApp
     {
         private readonly ConsoleService _service;
-        private readonly CrawlerLogic _crawlerLogic;
-        
-        public ConsoleApp(CrawlerLogic crawlerLogic, ConsoleService service)
+        private readonly HtmlCrawling _htmlCrawling;
+        private readonly XmlCrawling _xmlCrawling;
+        private readonly ConsoleResult _consoleResult;
+
+
+        public ConsoleApp(ConsoleService service, HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling, ConsoleResult consoleResult)
         {
-            _service = service;
-            _crawlerLogic = crawlerLogic;
+            _consoleResult = consoleResult; 
+            _xmlCrawling = xmlCrawling;
+            _htmlCrawling = htmlCrawling;
+            _service = service;   
         }
 
         public async Task Run()
         {
             var url = _service.ReadLine();
-            var linksHtml = await _crawlerLogic.StartCrawlingByHtml(url);
-            var linksXml = await _crawlerLogic.StartCrawlingByXml(url, linksHtml);
+            var linksHtml = await _htmlCrawling.CrawlingByHtml(url);
+            var linksXml = await _xmlCrawling.SiteMapCrawling(url);
 
             _service.WriteLine("\n Unique links from web page: \n");
 
-            var uniqHtml = _crawlerLogic.GetUniqueLinksFromHtml(linksHtml, linksXml);
+            var uniqHtml = _consoleResult.GetUniqueLinks(linksHtml, linksXml);
             GetAllLinks(uniqHtml);
 
             _service.WriteLine("\n Unique links from sitemap: \n");
 
-            var uniqXml = _crawlerLogic.GetUniqueLinksFromXml(linksHtml, linksXml);
+            var uniqXml = _consoleResult.GetUniqueLinks(linksXml, linksHtml);
             GetAllLinks(uniqXml);
 
             _service.WriteLine("\n All links from sitemap and web page: \n");
 
-            var allLinks = _crawlerLogic.GetAllLinksFromSite(linksHtml, linksXml);
+            var allLinks = _consoleResult.GetAllLinksFromSite(linksHtml, linksXml);
             GetAllLinks(allLinks);
 
             Environment.Exit(0);

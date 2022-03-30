@@ -22,7 +22,7 @@ namespace Crawler.ConsoleApplication
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddScoped<CrawlerLogic>();
+                        services.AddScoped<TimeEvaluate>();
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();
                         services.AddScoped<HtmlCrawling>();
@@ -33,6 +33,7 @@ namespace Crawler.ConsoleApplication
                         services.AddScoped<WebService>();
                         services.AddScoped<TimeResponse>();
                         services.AddScoped<Stopwatch>();
+                        services.AddScoped<ConsoleResult>();
                     }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
     }
 

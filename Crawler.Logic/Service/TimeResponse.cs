@@ -8,7 +8,11 @@ namespace Crawler.Logic.Service
 
         public TimeResponse(Stopwatch timer)
         {
-            _timer = timer;
+            _timer = timer;            
+        }
+
+        public void Start()
+        {
             _timer.Start();
         }
 
