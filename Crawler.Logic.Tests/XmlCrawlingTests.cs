@@ -27,13 +27,7 @@ namespace Crawler.LogicTests
             links.Add("/back");
            
 
-            _web.Setup(_ => _.GetXMLAsXmlDoc(It.IsAny<string>())).ReturnsAsync(It.IsAny<XmlDocument>);
-            _parser.Setup(_ => _.GetLinksFromXml(It.IsAny<XmlDocument>())).Returns(links);
-
-            var crawler = new XmlCrawling(_parser.Object, _web.Object);
-            var result = await crawler.SiteMapCrawling(It.IsAny<string>());
-
-            Assert.AreEqual(links, result);
+            
         }
     }
 }

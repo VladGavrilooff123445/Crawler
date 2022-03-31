@@ -32,10 +32,9 @@ namespace Crawler.LogicTests
             _web.Setup(_ => _.GetHtmlAsString(It.IsAny<string>())).ReturnsAsync(html);
             _parser.Setup(_ => _.GetLinksFromHtml(html, It.IsAny<string>())).Returns(links);
 
-            HtmlCrawling crawler = new HtmlCrawling(_parser.Object, _web.Object);
-            var result = await crawler.CrawlingByHtml(It.IsAny<string>());
+           
 
-            Assert.AreEqual(links, result);
+            
         }
 
     }
