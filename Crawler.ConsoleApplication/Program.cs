@@ -1,9 +1,11 @@
 ﻿using Crawler.Logic.Service;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Crawler.EntityFramework;
 
 namespace Crawler.ConsoleApplication
 {
@@ -22,6 +24,7 @@ namespace Crawler.ConsoleApplication
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
+                        services.AddEfRepository<CrawlerDbContext>(options => options.UseSqlServer(@"Server=localhost\MSSQLSERVER01;Database=WebCrawlerDB;Trusted_Connection=True"));
                         services.AddScoped<TimeEvaluate>();
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();

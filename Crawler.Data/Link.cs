@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Crawler.Data
+﻿namespace Crawler.Data
 {
     public class Link
     {
