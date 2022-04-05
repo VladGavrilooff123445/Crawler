@@ -24,7 +24,8 @@ namespace Crawler.ConsoleApplication
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddEfRepository<CrawlerDbContext>(options => options.UseSqlServer(@"Server=localhost\MSSQLSERVER01;Database=WebCrawlerDB;Trusted_Connection=True"));
+                        services.AddEfRepository<CrawlerDbContext>(options => options.UseSqlServer(@"Server=web.ukad.dev\\SQL2019;Database=ukad-webcrawler-trainee; user id=ukad-webcrawler-trainee; password=f3h6FU4vkjPvpjzf;"));
+                        services.AddScoped<CrawlerDbContextFactory>();
                         services.AddScoped<TimeEvaluate>();
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();
