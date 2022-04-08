@@ -8,10 +8,16 @@ namespace Crawler.EntityFramework
     {
         public CrawlerDbContext CreateDbContext(string[] args)
         {
-            var conect = @"Server=web.ukad.dev\SQL2019;Database=ukad-webcrawler-trainee; user id=ukad-webcrawler-trainee; password=f3h6FU4vkjPvpjzf;";
+            
             var optionsBuilder = new DbContextOptionsBuilder<CrawlerDbContext>();
 
-            optionsBuilder.UseSqlServer(conect);
+            if(args.Length < 1 || string.IsNullOrEmpty(args[0]))
+            {
+                throw new ArgumentException(
+                    "Invalid connection. Use CLI command -> dotnet ef database update -- \"connection your string\"" );
+            }
+
+            optionsBuilder.UseSqlServer(args[0]);
 
             return new CrawlerDbContext(optionsBuilder.Options);
         }

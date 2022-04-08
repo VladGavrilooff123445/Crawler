@@ -22,7 +22,7 @@ namespace Crawler.Logic.Service
             foreach (XmlNode xmlSitemapNode in xmlSitemapList)
             {
                 string timer = await _time.GetResponseTime(xmlSitemapNode.FirstChild.InnerText);
-                Link link = new Link() { Url = xmlSitemapNode.FirstChild.InnerText, Time = timer };
+                Link link = new Link() { Url = xmlSitemapNode.FirstChild.InnerText, Time = timer , InSitemap = true, InWebSite = false };
 
                 result.Add(link);
             }

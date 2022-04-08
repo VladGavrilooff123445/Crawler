@@ -14,6 +14,7 @@ namespace Crawler.EntityFramework
         }
 
         public DbSet<Link> Links { get; set; }
+        public DbSet<Test> Tests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

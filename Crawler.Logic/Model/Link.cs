@@ -7,5 +7,9 @@
         public bool IsCrawled { get; set; }
 
         public string Time { get; set; }
+
+        public bool InWebSite { get; set; }
+
+        public bool InSitemap { get; set; }
     }
 }

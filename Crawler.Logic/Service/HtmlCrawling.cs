@@ -54,19 +54,21 @@ namespace Crawler.Logic.Service
 
                     continue;
                 }
-
-                var links = _parser.GetLinksFromHtml(html, item.Url);
-
-                item.IsCrawled = true;
-
-                foreach (var link in links)
+                else
                 {
-                    if (!crawledLinks.Any(a => (a.Url == link)))
+                    var links = _parser.GetLinksFromHtml(html, item.Url);
+
+                    item.IsCrawled = true;
+
+                    foreach (var link in links)
                     {
-                        Link newLink = new Link() { IsCrawled = false, Url = link, Time = time };
-                        crawledLinks.Add(newLink);
+                        if (!crawledLinks.Any(a => (a.Url == link)))
+                        {
+                            Link newLink = new Link() { IsCrawled = false, Url = link, Time = time, InWebSite = true, InSitemap = false };
+                            crawledLinks.Add(newLink);
+                        }
                     }
-                }
+                } 
             }
 
             _timeResponse.Stop();
