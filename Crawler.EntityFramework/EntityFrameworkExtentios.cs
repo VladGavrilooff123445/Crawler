@@ -5,9 +5,9 @@ namespace Crawler.EntityFramework.Extentions
 {
     public static class EntityFrameworkExtentios
     {
-        public static IServiceCollection AddEntityFramework(this IServiceCollection services)
+        public static IServiceCollection AddEntityFramework(this IServiceCollection services, string connectionString)
         {
-            services.AddEfRepository<CrawlerDbContext>(options => options.UseSqlServer(@"Server=web.ukad.dev\SQL2019;Database=ukad-webcrawler-trainee; user id=ukad-webcrawler-trainee; password=f3h6FU4vkjPvpjzf;"));
+            services.AddEfRepository<CrawlerDbContext>(options => options.UseSqlServer(@$"{connectionString}"));
             services.AddScoped<CrawlerDbContextFactory>();
 
             return services;

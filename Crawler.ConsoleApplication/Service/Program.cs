@@ -24,7 +24,7 @@ namespace Crawler.ConsoleApplication.Service
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddEntityFramework();
+                        services.AddEntityFramework(@"Server=web.ukad.dev\SQL2019;Database=ukad-webcrawler-trainee; user id=ukad-webcrawler-trainee; password=f3h6FU4vkjPvpjzf;");
                         services.AddBusinessLogic();
                         services.AddScoped<ConsoleResult>();
                         services.AddScoped<ConsoleService>();

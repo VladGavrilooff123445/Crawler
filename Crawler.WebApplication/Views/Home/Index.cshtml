@@ -1,0 +1,31 @@
+﻿@model Crawler.WebApplication.Models.TestResult;
+@{
+    ViewData["Title"] = "Tests Page";
+}
+
+<div class="container mt-5">
+
+    <div class="row text-center mt-5 table-responsive">
+        <h1 class="h2">Test results</h1>
+        <table id="testsTable" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="w-50">Website</th>
+                    <th class="w-25">Date</th>
+                    <th class="w-25"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var test in Model.Tests)
+                {
+                    <tr>
+                        <td>@test.Url</td>
+                        <td>@test.Date</td>
+                        <td><a asp-action="LinkResult" asp-controller="TestResult" asp-route-id=@test.Id>see details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
