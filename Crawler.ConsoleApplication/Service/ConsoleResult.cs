@@ -63,17 +63,27 @@ namespace Crawler.ConsoleApplication.Service
 
             var step = 1;
 
+            var flag = false;
+
             foreach (var link in resUrls)
             {
+                Link item = new Link() { Url = link, InSitemap = true, InWebSite = true };
+
                 foreach (var i in xmlLinks)
-                {
+                { 
                     if (link == i.Url)
                     {
-                        Link item = new Link() { Url = link, Time = i.Time, InSitemap = i.InSitemap, InWebSite = i.InWebSite };
-                        result.Add(item);
+                        flag = true;
+                        item.Time = i.Time;
+                        item.InSitemap = true;
+                        item.InWebSite = false;
                         break;
                     }
                 }
+
+                item.InSitemap = flag;
+                flag = false;
+                result.Add(item);
 
                 step++;
 

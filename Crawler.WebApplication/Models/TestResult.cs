@@ -6,6 +6,6 @@ namespace Crawler.WebApplication.Models
 {
     public class TestResult
     {
-        public List<Test> Tests { get; set; }
+        public ICollection<Test> Tests { get; set; }
     }
 }

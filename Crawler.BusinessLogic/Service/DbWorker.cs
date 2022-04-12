@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Crawler.BusinessLogic.Service
 {
@@ -38,8 +39,7 @@ namespace Crawler.BusinessLogic.Service
 
         public async Task<List<Test>> GetAllTestResult()
         {
-            var result = _performanceTestData.GetAll().ToList();
-            await Task.Delay(4000);
+            var result = _performanceTestData.GetAll().ToListAsync().Result;
 
             return result;
         }
@@ -51,9 +51,9 @@ namespace Crawler.BusinessLogic.Service
                 .GetAll()
                 .Where(l => l.TestId == id)
                 .OrderBy(l => l.ResponseTime)
-                .ToList();
-            await Task.Delay(4000);
-
+                .ToListAsync()
+                .Result;
+            
             return result;
         }
 
@@ -63,9 +63,9 @@ namespace Crawler.BusinessLogic.Service
                 .GetAll()
                 .Where(l => l.TestId == id && l.InWebsite == false && l.InSitemap == true)
                 .Select(model => model.Url)
-                .ToList();
-            await Task.Delay(4000);
-
+                .ToListAsync()
+                .Result;
+     
             return result;
         }
 
@@ -75,9 +75,9 @@ namespace Crawler.BusinessLogic.Service
                 .GetAll()
                 .Where(l => l.TestId == id && l.InWebsite == true && l.InSitemap == false)
                 .Select(model => model.Url)
-                .ToList();
-            await Task.Delay(4000);
-    
+                .ToListAsync()
+                .Result;
+            
             return result; 
         }
 
