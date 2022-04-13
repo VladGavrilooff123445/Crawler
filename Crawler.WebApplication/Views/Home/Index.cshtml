@@ -28,7 +28,7 @@
         </table>
         <div class="btn-group">
             @{
-                <a asp-action="Index" asp-controller="Home" asp-route-pg=@Model.ShowedTest>next</a>  
+                <a asp-action="Index" asp-controller="Home" asp-route-pg=@Model.PageNumber + 1>next</a>  
             }
        </div>
     </div>
