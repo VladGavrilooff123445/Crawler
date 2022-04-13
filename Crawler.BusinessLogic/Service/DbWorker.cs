@@ -37,9 +37,13 @@ namespace Crawler.BusinessLogic.Service
             await _performanceLinksData.SaveChangesAsync();
         }
 
-        public async Task<List<Test>> GetAllTestResult()
+        public async Task<List<Test>> GetTestResult(int idOfFirstRow)
         {
-            var result = _performanceTestData.GetAll().ToListAsync().Result;
+            var result = await _performanceTestData
+                .GetAll()
+                .Skip(idOfFirstRow)
+                .Take(5)
+                .ToListAsync();
 
             return result;
         }

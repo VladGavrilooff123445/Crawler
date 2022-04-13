@@ -7,5 +7,6 @@ namespace Crawler.WebApplication.Models
     public class TestResult
     {
         public ICollection<Test> Tests { get; set; }
+        public int ShowedTest { get; set; }
     }
 }
