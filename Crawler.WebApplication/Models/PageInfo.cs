@@ -2,10 +2,14 @@
 
 namespace Crawler.WebApplication.Models
 {
-    public class PageInfo
+    public abstract class PageInfo
     {
-        public int FirstRowId { get; set; }
-
-        public int TotalNumber { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages
+        {
+            get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
+        }
     }
 }

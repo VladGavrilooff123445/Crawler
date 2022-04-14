@@ -25,14 +25,15 @@ namespace Crawler.BusinessLogic.Service
             await _performanceTestData.AddAsync(newTest);
             await _performanceTestData.SaveChangesAsync();
 
-            _performanceLinksData.AddRange(
-                links
-                .Select(p => new Link() { 
+            _performanceLinksData.AddRange(links
+                .Select(p => new Link() 
+                { 
                     Url = p.Url, 
                     ResponseTime = Convert.ToInt32(p.Time), 
                     InSitemap = p.InSitemap, 
                     InWebsite = p.InWebSite, 
-                    TestId = newTest.Id }));
+                    TestId = newTest.Id 
+                }));
 
             await _performanceLinksData.SaveChangesAsync();
         }
@@ -44,17 +45,16 @@ namespace Crawler.BusinessLogic.Service
             return result; 
         }
 
-        public async Task<List<Test>> GetTestResult(int idOfFirstRow)
+        public async Task<List<Test>> GetTestResult(int numberOfPage, int pageSize = 5)
         {
             var result = await _performanceTestData
                 .GetAll()
-                .Skip(idOfFirstRow)
-                .Take(5)
+                .Skip(numberOfPage*pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return result;
         }
-
 
         public async Task<List<Link>> GetAllTestLinksById(int id)
         {
@@ -68,35 +68,15 @@ namespace Crawler.BusinessLogic.Service
             return result;
         }
 
-        public async Task<List<string>> GetOnlySitemapLinks(int id)
+        public async Task<List<Link>> GetTestUrlsById(int id)
         {
-            var result = _performanceLinksData
-                .GetAll()
-                .Where(l => l.TestId == id && l.InWebsite == false && l.InSitemap == true)
-                .Select(model => model.Url)
+            var result = _performanceLinksData.GetAll()
+                .Where(a => a.TestId == id)
+                .OrderBy(a => a.ResponseTime)
                 .ToListAsync()
                 .Result;
-     
-            return result;
-        }
-
-        public async Task<List<string>> GetOnlyWebsiteLinks(int id)
-        {
-            var result = _performanceLinksData
-                .GetAll()
-                .Where(l => l.TestId == id && l.InWebsite == true && l.InSitemap == false)
-                .Select(model => model.Url)
-                .ToListAsync()
-                .Result;
-            
+                   
             return result; 
-        }
-
-        public async Task<string> GetTestUrlsById(int id)
-        {
-            var resultModel = await _performanceLinksData.GetByIdAsync(id);
-
-            return resultModel.Url; 
         }
     }
 }

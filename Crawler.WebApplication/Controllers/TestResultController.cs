@@ -16,12 +16,7 @@ namespace Crawler.WebApplication.Controllers
 
         public async Task<ViewResult> LinkResult(int id)
         {
-            var testUrl = await _dbWorker.GetTestUrlsById(id);
-            var allTestLinks = await _dbWorker.GetAllTestLinksById(id);
-            var inSitemap = await _dbWorker.GetOnlySitemapLinks(id);
-            var inWebsite = await _dbWorker.GetOnlyWebsiteLinks(id);
-
-            return View(new LinkResult() { Url = testUrl, OnlyInSitemap = inSitemap, OnlyInWebsite = inWebsite, Links = allTestLinks });
+            return View(new LinkResult() { Links = await _dbWorker.GetTestUrlsById(id) });
         }
     }
 }

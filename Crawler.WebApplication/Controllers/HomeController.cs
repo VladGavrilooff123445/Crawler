@@ -14,18 +14,18 @@ namespace Crawler.WebApplication.Controllers
             _dbWorker = dbWorker;
         }
 
-        public async Task<ViewResult> Index(int pg)
+        public async Task<ViewResult> Index(int pageSize = 5, int numberOfPage = 1)
         {
             var countTests = await _dbWorker.GetCountTestResult();
             var tests = new TestResult() 
             { 
-                Tests = await _dbWorker.GetTestResult(pg), 
-                PageNumber = pg,
-                PageSize = 5, 
+                Tests = await _dbWorker.GetTestResult(numberOfPage, pageSize), 
+                PageNumber = numberOfPage,
+                PageSize = pageSize, 
                 TotalItems = countTests 
             };
 
-            tests.PageNumber += tests.PageSize;
+            tests.PageNumber += 1;
 
             return View(tests);
         }

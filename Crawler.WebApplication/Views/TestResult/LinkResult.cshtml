@@ -5,7 +5,7 @@
 
 <div class="container mt-5">
     <div class="row border-bottom">
-        <h1 class="h2">@Model.Url</h1>
+        <h1 class="h2"></h1>
     </div>
 
     <div class="row mt-5 table-responsive d-flex">
@@ -40,11 +40,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var url in Model.OnlyInSitemap)
+                @foreach (var url in Model.Links)
                 {
-                    <tr>
-                        <td>@url</td>
-                    </tr>
+                    @if(url.InSitemap == true && url.InWebsite == false)
+                    {
+                        <tr>
+                           <td>@url.Url</td>
+                        </tr>    
+                    }
                 }
             </tbody>
         </table>
@@ -59,11 +62,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var url in Model.OnlyInWebsite)
+                @foreach (var url in Model.Links)
                 {
-                    <tr>
-                        <td>@url</td>
-                    </tr>
+                    @if(url.InSitemap == false && url.InWebsite == true)
+                    {
+                        <tr>
+                           <td>@url.Url</td>
+                        </tr>    
+                    }
                 }
             </tbody>
         </table>
