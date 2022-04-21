@@ -14,7 +14,7 @@ namespace Crawler.WebApplication.Controllers
             _dbWorker = dbWorker;
         }
 
-        public async Task<ViewResult> Index(int pageSize = 5, int numberOfPage = 1)
+        public async Task<ViewResult> Index(int pageSize = 5, int numberOfPage = 0)
         {
             var countTests = await _dbWorker.GetCountTestResult();
             var tests = new TestResult() 
@@ -24,8 +24,6 @@ namespace Crawler.WebApplication.Controllers
                 PageSize = pageSize, 
                 TotalItems = countTests 
             };
-
-            tests.PageNumber += 1;
 
             return View(tests);
         }

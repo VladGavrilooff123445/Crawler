@@ -1,17 +1,18 @@
 ﻿@model Crawler.WebApplication.Models.TestResult;
 @{
     ViewData["Title"] = "Tests Page";
+    List<SelectListItem> selectItems = new List<SelectListItem>() { new SelectListItem("5", "5"), new SelectListItem("10", "10"), new SelectListItem("15", "15") };
 }
 
-<form method="post">
+<form asp-action="Index">
+    <input type="hidden" asp-for="PageNumber" value="@Model.PageNumber">
+
 <div class="form-group">
     <label>Size</label>
-    <select class="form-control">
-        <option>5</option> 
-        <option>10</option>
-        <option>15</option>       
-    </select>
-  </div>
+    <select class="form-control" name="PageSize" asp-items="selectItems" onchange="this.form.submit()">
+                
+   </select>
+</div>
 </form>
 <div class="container mt-5">
 
@@ -36,11 +37,23 @@
                 }
             </tbody>
         </table>
+        
+        @if (Model.PageNumber > 0)
+        {
+            <div class="btn-group">
+                @{
+                    
+                    <a asp-action="Index" asp-controller="Home" asp-route-numberOfPage=@(Model.PageNumber - 1) asp-route-pageSize=@Model.PageSize>prev</a>  
+                }
+            </div>    
+        }
         <div class="btn-group">
-            @{
-                <a asp-action="Index" asp-controller="Home" asp-route-numberOfPage=@Model.PageNumber asp-route-pageSize=@Model.PageSize>next</a>  
-            }
-       </div>
+             @{
+                
+                 <a asp-action="Index" asp-controller="Home" asp-route-numberOfPage=@(Model.PageNumber + 1) asp-route-pageSize=@Model.PageSize>next</a>
+                
+             }
+        </div>
     </div>
 </div>
 
