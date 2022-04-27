@@ -1,9 +1,9 @@
-﻿using System;
-using Crawler.BusinessLogic.Service;
+﻿using Crawler.Logic.Model;
+using Crawler.Logic.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Crawler.Logic.Model;
 
 namespace Crawler.ConsoleApplication.Service
 {
@@ -11,12 +11,14 @@ namespace Crawler.ConsoleApplication.Service
     {
         private readonly ConsoleService _service;
         private readonly ConsoleResult _consoleResult;
-        private readonly Evaluator _evaluator;
-        
-        
-        public ConsoleApp(ConsoleService service, ConsoleResult consoleResult, Evaluator evaluator)
+        private readonly HtmlCrawling _htmlCrawling;
+        private readonly XmlCrawling _xmlCrawling;
+
+
+        public ConsoleApp(ConsoleService service, ConsoleResult consoleResult, HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling)
         {
-            _evaluator = evaluator;
+            _xmlCrawling = xmlCrawling;
+            _htmlCrawling = htmlCrawling;
             _consoleResult = consoleResult; 
             _service = service;   
         }
@@ -25,8 +27,8 @@ namespace Crawler.ConsoleApplication.Service
         {
             DateTime date = DateTime.Now;
             var url = _service.ReadLine();
-            var linksHtml = await _evaluator.PerformWebPageLinks(url);
-            var linksXml = await _evaluator.PerformSiteMapLinks(url);
+            var linksHtml = await _htmlCrawling.CrawlingByHtml(url);
+            var linksXml = await _xmlCrawling.SiteMapCrawling(url);
 
             _service.WriteLine("\n Unique links from sitemap: \n");
 
@@ -44,8 +46,6 @@ namespace Crawler.ConsoleApplication.Service
             GetAllLinks(allLinks);
 
             _service.WriteLine("Saving result");
-
-            await _evaluator.SaveResultToDataBase(allLinks, url, date);
 
             Environment.Exit(0);
         }

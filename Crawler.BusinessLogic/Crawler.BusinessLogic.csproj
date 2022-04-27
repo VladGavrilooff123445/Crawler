@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Crawler.ConsoleApplication\Crawler.ConsoleApplication.csproj" />
     <ProjectReference Include="..\Crawler.Data\Crawler.Data.csproj" />
     <ProjectReference Include="..\Crawler.EntityFramework\Crawler.EntityFramework.csproj" />
     <ProjectReference Include="..\Crawler.Logic\Crawler.Logic.csproj" />

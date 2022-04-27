@@ -3,9 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Crawler.EntityFramework.Extentions;
-using Crawler.Logic.Extentions;
-using Crawler.BusinessLogic.Extentions;
+using Crawler.Logic.Extensions;
 
 namespace Crawler.ConsoleApplication.Service
 {
@@ -24,8 +22,6 @@ namespace Crawler.ConsoleApplication.Service
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddEntityFramework(@"Server=web.ukad.dev\SQL2019;Database=ukad-webcrawler-trainee; user id=ukad-webcrawler-trainee; password=f3h6FU4vkjPvpjzf;");
-                        services.AddBusinessLogic();
                         services.AddScoped<ConsoleResult>();
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();

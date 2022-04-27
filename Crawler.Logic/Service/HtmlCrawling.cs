@@ -51,7 +51,7 @@ namespace Crawler.Logic.Service
                     {
                         break;
                     }
-
+                    item.IsCrawled = true;
                     continue;
                 }
                 else

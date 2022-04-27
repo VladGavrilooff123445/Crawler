@@ -1,0 +1,9 @@
+﻿@model Crawler.WebApplication.Models.InputUrl
+
+<form method="post" asp-action="GetNewTest">
+  <div class="form-group">
+    <label>URL</label>
+    <input asp-for="Url" class="form-control" placeholder="Enter URL">
+  </div>
+  <button type="submit" class="btn btn-primary" onchange="this.form.submit()">Submit</button>
+</form>

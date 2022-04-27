@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Crawler.BusinessLogic\Crawler.BusinessLogic.csproj" />
+    <ProjectReference Include="..\Crawler.Logic\Crawler.Logic.csproj" />
   </ItemGroup>
 
 </Project>
