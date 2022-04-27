@@ -1,9 +1,9 @@
 ﻿using Crawler.BusinessLogic.Service;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Crawler.BusinessLogic.Extentions
+namespace Crawler.BusinessLogic.Extensions
 {
-    public static class BusinessLogicExtentios
+    public static class BusinessLogicExtensios
     {
         public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
         {

@@ -1,7 +1,7 @@
 ﻿using Crawler.Logic.Service;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Crawler.Logic.Extentions
+namespace Crawler.Logic.Extensions
 {
     public static class LogicExtensions
     {

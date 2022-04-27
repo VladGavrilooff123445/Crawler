@@ -18,10 +18,9 @@ namespace Crawler.EntityFramework.Configurations
             builder
                 .HasMany(test => test.Links)
                 .WithOne(link => link.Test)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
             builder
                 .HasKey(w => w.Id);
         }
-
     }
 }

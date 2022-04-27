@@ -56,25 +56,12 @@ namespace Crawler.BusinessLogic.Service
             return result;
         }
 
-        public async Task<List<Link>> GetAllTestLinksById(int id)
-        {
-            var result = _performanceLinksData
-                .GetAll()
-                .Where(l => l.TestId == id)
-                .OrderBy(l => l.ResponseTime)
-                .ToListAsync()
-                .Result;
-            
-            return result;
-        }
-
         public async Task<List<Link>> GetTestUrlsById(int id)
         {
-            var result = _performanceLinksData.GetAll()
+            var result = await _performanceLinksData.GetAll()
                 .Where(a => a.TestId == id)
                 .OrderBy(a => a.ResponseTime)
-                .ToListAsync()
-                .Result;
+                .ToListAsync();
                    
             return result; 
         }

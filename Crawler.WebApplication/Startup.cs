@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Crawler.EntityFramework.Extentions;
-using Crawler.BusinessLogic.Extentions;
-using Crawler.Logic.Extentions;
+using Crawler.EntityFramework.Extensions;
+using Crawler.BusinessLogic.Extensions;
+using Crawler.Logic.Extensions;
 using Crawler.ConsoleApplication.Service;
 using System.Diagnostics;
 

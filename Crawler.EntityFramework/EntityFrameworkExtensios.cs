@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Crawler.EntityFramework.Extentions
+namespace Crawler.EntityFramework.Extensions
 {
-    public static class EntityFrameworkExtentios
+    public static class EntityFrameworkExtensios
     {
         public static IServiceCollection AddEntityFramework(this IServiceCollection services, string connectionString)
         {
