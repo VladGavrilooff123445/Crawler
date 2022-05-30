@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Crawler.Logic.Extensions;
+using Crawler.BusinessLogic.Extensions;
 
 namespace Crawler.ConsoleApplication.Service
 {
@@ -22,11 +22,9 @@ namespace Crawler.ConsoleApplication.Service
                 Host.CreateDefaultBuilder(args)
                     .ConfigureServices((hostContext, services) =>
                     {
-                        services.AddScoped<ConsoleResult>();
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();
-                        services.AddScoped<Stopwatch>();
-                        services.AddCrawlerLogic();
+                        services.AddBusinessLogic();
                     }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
     }
 

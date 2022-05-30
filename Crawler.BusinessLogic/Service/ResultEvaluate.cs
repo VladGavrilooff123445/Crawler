@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Crawler.ConsoleApplication.Service
+namespace Crawler.BusinessLogic.Service
 {
-    public class ConsoleResult
+    public class ResultEvaluate
     {
         public List<Link> GetUniqueLinks(List<Link> unexcept, List<Link> except)
         {
             var result = new List<Link>();
-            
+
             var urlsExc = except
                 .Select(a => a.Url)
                 .ToList();
@@ -70,7 +70,7 @@ namespace Crawler.ConsoleApplication.Service
                 Link item = new Link() { Url = link, InSitemap = true, InWebSite = true };
 
                 foreach (var i in xmlLinks)
-                { 
+                {
                     if (link == i.Url)
                     {
                         flag = true;
@@ -97,3 +97,4 @@ namespace Crawler.ConsoleApplication.Service
         }
     }
 }
+

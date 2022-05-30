@@ -7,8 +7,6 @@ using Microsoft.Extensions.Hosting;
 using Crawler.EntityFramework.Extensions;
 using Crawler.BusinessLogic.Extensions;
 using Crawler.Logic.Extensions;
-using Crawler.ConsoleApplication.Service;
-using System.Diagnostics;
 
 namespace Crawler.WebApplication
 {
@@ -26,11 +24,6 @@ namespace Crawler.WebApplication
         {
             services.AddEntityFramework(Configuration.GetConnectionString("Default"));
             services.AddBusinessLogic();
-            services.AddCrawlerLogic();
-            services.AddScoped<ConsoleResult>();
-            services.AddScoped<ConsoleService>();
-            services.AddScoped<ConsoleApp>();
-            services.AddScoped<Stopwatch>();
             services.AddControllersWithViews();
         }
 

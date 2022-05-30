@@ -1,5 +1,4 @@
 ﻿using Crawler.Data;
-using System;
 using System.Collections.Generic;
 
 namespace Crawler.WebApplication.Models

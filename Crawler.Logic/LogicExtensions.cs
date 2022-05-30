@@ -8,7 +8,6 @@ namespace Crawler.Logic.Extensions
         public static IServiceCollection AddCrawlerLogic(this IServiceCollection services)
         {
             services.AddScoped<WebService>();
-            services.AddScoped<TimeResponse>();
             services.AddScoped<HtmlCrawling>();
             services.AddScoped<HtmlParser>();
             services.AddScoped<Validator>();

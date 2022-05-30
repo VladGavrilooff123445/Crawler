@@ -6,15 +6,13 @@ using Crawler.Logic.Model;
 namespace Crawler.Logic.Service
 {
     public class HtmlCrawling
-    {
-        private readonly TimeResponse _timeResponse;
+    { 
         private readonly TimeEvaluate _timeEvaluate;
         private readonly WebService _web;
         private readonly HtmlParser _parser;
 
-        public HtmlCrawling(HtmlParser parser, WebService web, TimeEvaluate timeEvaluate, TimeResponse timeResponse)
+        public HtmlCrawling(HtmlParser parser, WebService web, TimeEvaluate timeEvaluate)
         {
-            _timeResponse = timeResponse;
             _timeEvaluate = timeEvaluate;
             _parser = parser;
             _web = web;
@@ -35,7 +33,6 @@ namespace Crawler.Logic.Service
  
         private async Task<List<Link>> CrawlingLogic(List<Link> crawledLinks)
         {
-            _timeResponse.Start();
 
             var onlyOneElement = 1;
 
@@ -70,8 +67,6 @@ namespace Crawler.Logic.Service
                     }
                 } 
             }
-
-            _timeResponse.Stop();
 
             return crawledLinks;
         }

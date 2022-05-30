@@ -1,5 +1,7 @@
 ﻿using Crawler.BusinessLogic.Service;
+using Crawler.Logic.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Crawler.BusinessLogic.Extensions
 {
@@ -9,7 +11,10 @@ namespace Crawler.BusinessLogic.Extensions
         {
             services.AddScoped<DbWorker>();
             services.AddScoped<Evaluator>();
-            
+            services.AddScoped<ResultEvaluate>();
+            services.AddCrawlerLogic();
+            services.AddScoped<Stopwatch>();
+
             return services;
         }
     }

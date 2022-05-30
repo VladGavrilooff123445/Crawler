@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Crawler.BusinessLogic\Crawler.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Crawler.ConsoleApplication\Crawler.ConsoleApplication.csproj" />
+    <ProjectReference Include="..\Crawler.EntityFramework\Crawler.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>

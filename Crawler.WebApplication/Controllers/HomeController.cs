@@ -16,16 +16,12 @@ namespace Crawler.WebApplication.Controllers
             _dbWorker = dbWorker;
         }
 
-        public async Task<ViewResult> Index(int pageSize = 5, int numberOfPage = 0)
+        public async Task<ViewResult> Index(TestResult tests )
         {
             var countTests = await _dbWorker.GetCountTestResult();
-            var tests = new TestResult()
-            {
-                Tests = await _dbWorker.GetTestResult(numberOfPage, pageSize),
-                PageNumber = numberOfPage,
-                PageSize = pageSize,
-                TotalItems = countTests
-            };
+            tests.Tests = await _dbWorker.GetTestResult(tests.PageNumber, tests.PageSize);           
+            tests.TotalItems = countTests;
+            
 
             return View(tests);
         }
