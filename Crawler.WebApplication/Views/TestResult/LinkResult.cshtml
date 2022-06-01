@@ -1,15 +1,23 @@
 ﻿@model Crawler.WebApplication.Models.LinkResult;
 @{
-    ViewData["Title"] = "Test result page";
+    ViewData["Title"] = "Test result page"; 
+    var sitemapUrls = Model.Links.Where(a => a.InSitemap == true && a.InWebsite == false);
+    var websiteUrls = Model.Links.Where(a => a.InSitemap == false && a.InWebsite == true);
+    
 }
 
 <body>
     
     @await Html.PartialAsync("_UrlResult")
 
-    @await Html.PartialAsync("_UrlSitemap")
+    <div class="row mt-5 table-responsive">
+        <h1 class="h2">URLs NOT FOUND AT WEBSITE</h1>
+            @await Html.PartialAsync("_UniqueUrls", sitemapUrls)
+    </div>
 
-    @await Html.PartialAsync("_UrlWebSite")
-    
+    <div class="row mt-5 table-responsive">
+        <h1 class="h2">URLs NOT FOUND AT SITEMAP</h1>
+            @await Html.PartialAsync("_UniqueUrls", websiteUrls)
+    </div>
 </body>
 

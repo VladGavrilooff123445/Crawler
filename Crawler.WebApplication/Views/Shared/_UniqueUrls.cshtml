@@ -1,0 +1,15 @@
+﻿<table id="onlySitemapUrlsTable" class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Url</th>
+        </tr>
+    </thead>
+        <tbody>
+            @foreach (var url in Model)
+            {
+                <tr>
+                    <td>@url.Url</td>
+                </tr>    
+            }
+        </tbody>
+</table>

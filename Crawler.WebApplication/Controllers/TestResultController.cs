@@ -16,7 +16,10 @@ namespace Crawler.WebApplication.Controllers
 
         public async Task<ViewResult> LinkResult(int id)
         {
-            return View(new LinkResult() { Links = await _dbWorker.GetTestUrlsById(id) });
+            return View(new LinkResult() 
+            { 
+                Links = await _dbWorker.GetTestUrlsById(id) 
+            });
         }
     }
 }

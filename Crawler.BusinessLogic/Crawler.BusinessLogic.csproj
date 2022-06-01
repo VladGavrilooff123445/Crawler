@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Crawler.Data\Crawler.Data.csproj" />
     <ProjectReference Include="..\Crawler.EntityFramework\Crawler.EntityFramework.csproj" />
     <ProjectReference Include="..\Crawler.Logic\Crawler.Logic.csproj" />

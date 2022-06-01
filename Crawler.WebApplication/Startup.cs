@@ -4,9 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Crawler.EntityFramework.Extensions;
 using Crawler.BusinessLogic.Extensions;
-using Crawler.Logic.Extensions;
 
 namespace Crawler.WebApplication
 {
@@ -21,9 +19,8 @@ namespace Crawler.WebApplication
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddEntityFramework(Configuration.GetConnectionString("Default"));
-            services.AddBusinessLogic();
+        { 
+            services.AddBusinessLogic(Configuration.GetConnectionString("Default"));
             services.AddControllersWithViews();
         }
 
