@@ -24,7 +24,7 @@ namespace Crawler.ConsoleApplication.Service
                     {
                         services.AddScoped<ConsoleService>();
                         services.AddScoped<ConsoleApp>();
-                        services.AddBusinessLogic();
+                        //services.AddBusinessLogic();
                     }).ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Error));
     }
 

@@ -25,9 +25,9 @@ namespace Crawler.BusinessLogic.Service
         {
             DateTime date = DateTime.Now;
             var linksHtml = await _htmlCrawling.CrawlingByHtml(url);
-            var linksXml = await _xmlCrawling.SiteMapCrawling(url);
+            var linksXml = await _xmlCrawling.SiteMapCrawling(url, linksHtml);
 
-            var allLinks = _result.GetAllLinksFromSite(linksHtml, linksXml);
+            var allLinks = await _result.GetAllLinksFromSite(linksHtml, linksXml);
 
             await SaveResultToDataBase(allLinks, url, date);
 
