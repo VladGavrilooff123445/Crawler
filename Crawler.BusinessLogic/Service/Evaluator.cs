@@ -11,9 +11,9 @@ namespace Crawler.BusinessLogic.Service
         private readonly HtmlCrawling _htmlCrawling;
         private readonly XmlCrawling _xmlCrawling;
         private readonly DbWorker _dbWorker;
-        private readonly ResultEvaluate _result;
+        private readonly DataWorker _result;
 
-        public Evaluator(HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling, DbWorker dbWorker, ResultEvaluate result)
+        public Evaluator(HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling, DbWorker dbWorker,  DataWorker result)
         { 
             _result = result;   
             _htmlCrawling = htmlCrawling;

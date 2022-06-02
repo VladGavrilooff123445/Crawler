@@ -13,7 +13,7 @@ namespace Crawler.BusinessLogic.Extensions
             services.AddEntityFramework(connectionString);
             services.AddScoped<DbWorker>();
             services.AddScoped<Evaluator>();
-            services.AddScoped<ResultEvaluate>();
+            services.AddScoped<DataWorker>();
             services.AddCrawlerLogic();
             services.AddScoped<Stopwatch>();
 
