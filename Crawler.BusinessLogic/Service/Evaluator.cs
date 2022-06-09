@@ -11,11 +11,11 @@ namespace Crawler.BusinessLogic.Service
         private readonly HtmlCrawling _htmlCrawling;
         private readonly XmlCrawling _xmlCrawling;
         private readonly DbWorker _dbWorker;
-        private readonly DataWorker _result;
+        private readonly DataWorker _worker;
 
-        public Evaluator(HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling, DbWorker dbWorker,  DataWorker result)
+        public Evaluator(HtmlCrawling htmlCrawling, XmlCrawling xmlCrawling, DbWorker dbWorker,  DataWorker worker)
         { 
-            _result = result;   
+            _worker = worker;   
             _htmlCrawling = htmlCrawling;
             _xmlCrawling = xmlCrawling;
             _dbWorker = dbWorker;
@@ -27,9 +27,7 @@ namespace Crawler.BusinessLogic.Service
             var linksHtml = await _htmlCrawling.CrawlingByHtml(url);
             var linksXml = await _xmlCrawling.SiteMapCrawling(url);
 
-            _result.GetUniqueLinks(linksHtml, linksXml);
-
-            var allLinks = await _result.GetAllLinksForDb(linksHtml, linksXml);
+            var allLinks = _worker.GetAllLinksForDb(linksHtml, linksXml);
 
             await SaveResultToDataBase(allLinks, url, date);
 

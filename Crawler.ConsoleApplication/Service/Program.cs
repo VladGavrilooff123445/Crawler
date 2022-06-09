@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using Crawler.BusinessLogic.Extensions;
 
 namespace Crawler.ConsoleApplication.Service
 {

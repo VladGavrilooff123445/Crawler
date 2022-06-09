@@ -1,64 +1,29 @@
 ﻿using Crawler.Logic.Model;
-using Crawler.Logic.Service;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Crawler.BusinessLogic.Service
 {
     public class DataWorker
     {
-        private TimeEvaluate _timer; 
-
-        public DataWorker()
+        public ICollection<Link> GetAllLinksForDb(ICollection<Link> htmlLinks, ICollection<Link> xmlLinks)
         {
-            _timer = new TimeEvaluate();
-        }
+            var result = htmlLinks.Intersect(xmlLinks).ToList();
 
-        public async Task<IEnumerable<Link>> GetAllLinksForDb(IEnumerable<Link> htmlLinks, IEnumerable<Link> xmlLinks)
-        {
-            var result = new List<Link>();
-
-            result.AddRange(xmlLinks);
-
-            var HtmlLinks = htmlLinks.Select(a => a.Url).ToList();
-            var exHtmlLink = result.Select(a => a.Url).ToList();
-
-            var uniqHtmlLinks = HtmlLinks.Except(exHtmlLink).ToList();
-
-            foreach (var link in uniqHtmlLinks)
+            foreach (var link in result)
             {
-                var time = await _timer.GetResponseTime(link);
-                var url = new Link { Url = link, InSitemap = false, InWebSite = true, IsCrawled = true, Time = time };
-                result.Add(url);
+                link.InSitemap = true;
+                link.InWebSite = true;
             }
 
-            return result;
-        }
+            var uniqHtmlLinks = htmlLinks.Except(xmlLinks).ToList();
+            var uniqXmlLinks = xmlLinks.Except(htmlLinks).ToList();
 
-        public void GetUniqueLinks(IEnumerable<Link> htmlLinks, IEnumerable<Link> XmlLinks)
-        {
-            var linksHtml = htmlLinks.Select(a => a.Url).ToList();
-            var linksXml = XmlLinks.Select(a => a.Url).ToList();
 
-            foreach (var link in XmlLinks)
-            {
-                if (linksHtml.Contains(link.Url))
-                {
-                    link.IsCrawled = true;
-                    link.InWebSite = true;
-                }
-            }
+            result.AddRange(uniqXmlLinks);
+            result.AddRange(uniqHtmlLinks);
 
-            foreach (var link in htmlLinks)
-            {
-                if (linksXml.Contains(link.Url))
-                {
-                    link.IsCrawled = true;
-                    link.InSitemap = true;
-                }
-            }
-
+            return result; 
         }
     }
 }
