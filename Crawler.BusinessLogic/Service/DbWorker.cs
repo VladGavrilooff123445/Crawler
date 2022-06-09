@@ -19,7 +19,7 @@ namespace Crawler.BusinessLogic.Service
             _performanceTestData = performanceTestData;
         }
 
-        public async Task SetDataToDb(List<Logic.Model.Link> links, DateTime date, string url)
+        public async Task SetDataToDb(IEnumerable<Logic.Model.Link> links, DateTime date, string url)
         {
             var newTest = new Test { Url = url, Date = date };
             await _performanceTestData.AddAsync(newTest);
@@ -45,7 +45,7 @@ namespace Crawler.BusinessLogic.Service
             return result; 
         }
 
-        public async Task<List<Test>> GetTestResult(int numberOfPage, int pageSize = 5)
+        public async Task<IEnumerable<Test>> GetTestResult(int numberOfPage, int pageSize = 5)
         {
             var result = await _performanceTestData
                 .GetAll()
@@ -56,7 +56,7 @@ namespace Crawler.BusinessLogic.Service
             return result;
         }
 
-        public async Task<List<Link>> GetTestUrlsById(int id)
+        public async Task<IEnumerable<Link>> GetTestUrlsById(int id)
         {
             var result = await _performanceLinksData.GetAll()
                 .Where(a => a.TestId == id)

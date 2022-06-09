@@ -21,13 +21,15 @@ namespace Crawler.BusinessLogic.Service
             _dbWorker = dbWorker;
         }
 
-        public async Task<List<Link>> CrawlingUrl(string url)
+        public async Task<IEnumerable<Link>> CrawlingUrl(string url)
         {
             DateTime date = DateTime.Now;
             var linksHtml = await _htmlCrawling.CrawlingByHtml(url);
-            var linksXml = await _xmlCrawling.SiteMapCrawling(url, linksHtml);
+            var linksXml = await _xmlCrawling.SiteMapCrawling(url);
 
-            var allLinks = await _result.GetAllLinksFromSite(linksHtml, linksXml);
+            _result.GetUniqueLinks(linksHtml, linksXml);
+
+            var allLinks = await _result.GetAllLinksForDb(linksHtml, linksXml);
 
             await SaveResultToDataBase(allLinks, url, date);
 
@@ -36,7 +38,7 @@ namespace Crawler.BusinessLogic.Service
 
         
 
-        private async Task SaveResultToDataBase(List<Link> links, string url, DateTime date)
+        private async Task SaveResultToDataBase(IEnumerable<Link> links, string url, DateTime date)
         {
             await _dbWorker.SetDataToDb(links, date, url);
         }

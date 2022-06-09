@@ -11,12 +11,12 @@ namespace Crawler.ConsoleApplication.Service
     {
         private readonly ConsoleService _service;
         private readonly Evaluator _evaluator;
-        private readonly ResultEvaluate _resultEvaluate;
+        private readonly DataWorker _worker;
 
 
-        public ConsoleApp(ConsoleService service, Evaluator evaluator, ResultEvaluate resultEvaluate)
+        public ConsoleApp(ConsoleService service, Evaluator evaluator, DataWorker worker)
         {
-            _resultEvaluate = resultEvaluate;
+            _worker = worker;
             _evaluator = evaluator;
             _service = service;   
         }
@@ -31,7 +31,7 @@ namespace Crawler.ConsoleApplication.Service
             Environment.Exit(0);
         }
 
-        private void GetAllLinks(List<Link> links)
+        private void GetAllLinks(IEnumerable<Link> links)
         {
             var count = 1;  
 

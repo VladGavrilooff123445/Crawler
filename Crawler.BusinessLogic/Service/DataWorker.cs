@@ -8,7 +8,14 @@ namespace Crawler.BusinessLogic.Service
 {
     public class DataWorker
     {
-        public async Task<List<Link>> GetAllLinksFromSite(List<Link> htmlLinks, List<Link> xmlLinks)
+        private TimeEvaluate _timer; 
+
+        public DataWorker()
+        {
+            _timer = new TimeEvaluate();
+        }
+
+        public async Task<IEnumerable<Link>> GetAllLinksForDb(IEnumerable<Link> htmlLinks, IEnumerable<Link> xmlLinks)
         {
             var result = new List<Link>();
 
@@ -19,14 +26,39 @@ namespace Crawler.BusinessLogic.Service
 
             var uniqHtmlLinks = HtmlLinks.Except(exHtmlLink).ToList();
 
-            foreach(var link in uniqHtmlLinks)
+            foreach (var link in uniqHtmlLinks)
             {
-                var timer = new TimeEvaluate();
-                var url = new Link { Url = link, InSitemap = false, InWebSite = true, IsCrawled = true, Time = await timer.GetResponseTime(link) };
+                var time = await _timer.GetResponseTime(link);
+                var url = new Link { Url = link, InSitemap = false, InWebSite = true, IsCrawled = true, Time = time };
                 result.Add(url);
             }
 
             return result;
+        }
+
+        public void GetUniqueLinks(IEnumerable<Link> htmlLinks, IEnumerable<Link> XmlLinks)
+        {
+            var linksHtml = htmlLinks.Select(a => a.Url).ToList();
+            var linksXml = XmlLinks.Select(a => a.Url).ToList();
+
+            foreach (var link in XmlLinks)
+            {
+                if (linksHtml.Contains(link.Url))
+                {
+                    link.IsCrawled = true;
+                    link.InWebSite = true;
+                }
+            }
+
+            foreach (var link in htmlLinks)
+            {
+                if (linksXml.Contains(link.Url))
+                {
+                    link.IsCrawled = true;
+                    link.InSitemap = true;
+                }
+            }
+
         }
     }
 }

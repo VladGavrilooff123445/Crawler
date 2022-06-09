@@ -5,6 +5,6 @@ namespace Crawler.WebApplication.Models
 {
     public class LinkResult
     { 
-        public ICollection<Link> Links { get; set; }
+        public IEnumerable<Link> Links { get; set; }
     }
 }

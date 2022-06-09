@@ -5,6 +5,6 @@ namespace Crawler.WebApplication.Models
 {
     public class TestResult : PageInfo
     {
-        public ICollection<Test> Tests { get; set; }   
+        public IEnumerable<Test> Tests { get; set; }   
     }
 }

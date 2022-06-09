@@ -15,10 +15,10 @@ namespace Crawler.Logic.Service
             _web = web;
         }
 
-        public virtual async Task<List<Link>> SiteMapCrawling(string url, List<Link> existLinks)
+        public virtual async Task<List<Link>> SiteMapCrawling(string url)
         {   
             var xml = await _web.GetXMLAsXmlDoc(url);
-            var links = await _parser.GetLinksFromXml(xml, existLinks);
+            var links = await _parser.GetLinksFromXml(xml);
 
             return links;
         }

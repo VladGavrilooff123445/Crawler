@@ -26,9 +26,15 @@ namespace Crawler.WebApplication.Controllers
             return View(tests);
         }
 
-        public async Task GetNewTest(InputUrl input)
+        public async Task<ViewResult> GetNewTest(InputUrl input, TestResult tests)
         {
             await _evaluator.CrawlingUrl(input.Url);
+            var countTests = await _dbWorker.GetCountTestResult();
+            tests.Tests = await _dbWorker.GetTestResult(tests.PageNumber, tests.PageSize);
+            tests.TotalItems = countTests;
+
+            //await Index(tests);
+            return View("Index", tests);
         }
     }
 }
