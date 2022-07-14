@@ -9,8 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Crawler.BusinessLogic\Crawler.BusinessLogic.csproj" />
-    <ProjectReference Include="..\Crawler.EntityFramework\Crawler.EntityFramework.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
 </Project>
