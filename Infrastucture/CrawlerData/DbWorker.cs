@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.CrawlerData
@@ -14,7 +15,7 @@ namespace Infrastucture.CrawlerData
             _performanceTestData = performanceTestData;
         }
 
-        public async Task SetDataToDb(IEnumerable<Link> links, DateTime date, string url)
+        public async Task SetDataToDb(IEnumerable<Domain.Link> links, DateTime date, string url)
         {
             var newTest = new Test { Url = url, Date = date };
             await _performanceTestData.AddAsync(newTest);

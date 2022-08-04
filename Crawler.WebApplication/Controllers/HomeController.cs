@@ -1,5 +1,5 @@
-﻿using Crawler.BusinessLogic.Service;
-using Crawler.WebApplication.Models;
+﻿using Crawler.WebApplication.Models;
+using Crawler.WebApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,34 +7,30 @@ namespace Crawler.WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DbWorker _dbWorker;
-        private readonly Evaluator _evaluator;
+        private readonly TestsService _getTests;
 
-        public HomeController(DbWorker dbWorker, Evaluator evaluator)
+        public HomeController(TestsService getTests)
         {
-            _evaluator = evaluator;
-            _dbWorker = dbWorker;
+            _getTests = getTests;
+        }
+        /// <summary>
+        /// Get all tests from database
+        /// </summary>
+        /// <param name="tests"></param>
+        /// <returns></returns>
+        public async Task<ViewResult> Index(TestResult tests)
+        {  
+            return View(await _getTests.GetListOfTests(tests));
         }
 
-        public async Task<ViewResult> Index(TestResult tests )
+        /// <summary>
+        /// Return updated list of tests with new test 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public async Task<ViewResult> GetNewTest(InputUrl input)
         {
-            var countTests = await _dbWorker.GetCountTestResult();
-            tests.Tests = await _dbWorker.GetTestResult(tests.PageNumber, tests.PageSize);           
-            tests.TotalItems = countTests;
-            
-
-            return View(tests);
-        }
-
-        public async Task<ViewResult> GetNewTest(InputUrl input, TestResult tests)
-        {
-            await _evaluator.CrawlingUrl(input.Url);
-            var countTests = await _dbWorker.GetCountTestResult();
-            tests.Tests = await _dbWorker.GetTestResult(tests.PageNumber, tests.PageSize);
-            tests.TotalItems = countTests;
-
-            //await Index(tests);
-            return View("Index", tests);
+            return View("Index", await _getTests.GetNewTestItem(input.Url));
         }
     }
 }

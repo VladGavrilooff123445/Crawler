@@ -1,10 +1,10 @@
-﻿using Crawler.Data;
+﻿using Domain;
 using System.Collections.Generic;
 
 namespace Crawler.WebApplication.Models
 {
     public class TestResult : PageInfo
     {
-        public IEnumerable<Test> Tests { get; set; }   
+        public IReadOnlyList<Test> Tests { get; set; }   
     }
 }

@@ -1,25 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Crawler.WebApplication.Models;
-using Crawler.BusinessLogic.Service;
+using Crawler.WebApplication.Services;
 using System.Threading.Tasks;
 
 namespace Crawler.WebApplication.Controllers
 {
     public class TestResultController : Controller
     {
-        private readonly DbWorker _dbWorker;
+        private readonly LinksService _getLinks;
 
-        public TestResultController(DbWorker dbWorker)
+        public TestResultController(LinksService getLinks)
         {
-            _dbWorker = dbWorker;
+            _getLinks = getLinks;
         }
-
+        /// <summary>
+        /// Return the list of links by TestId 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ViewResult> LinkResult(int id)
-        {
-            return View(new LinkResult() 
-            { 
-                Links = await _dbWorker.GetTestUrlsById(id) 
-            });
+        {   
+            return View(await _getLinks.GetListOfLinks(id));
         }
     }
 }

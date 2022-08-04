@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using InfrastructureIoC;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Crawler.BusinessLogic.Extensions;
+using Crawler.WebApplication.Services;
 
 namespace Crawler.WebApplication
 {
@@ -19,9 +19,12 @@ namespace Crawler.WebApplication
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddBusinessLogic(Configuration.GetConnectionString("Default"));
+        {
             services.AddControllersWithViews();
+            services.AddScoped<LinksService>();
+            services.AddScoped<TestsService>();
+            DependencyContainer.RegisterServices(services);
+            DependencyContainer.RegisterDbContext(services, Configuration.GetConnectionString("Default"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

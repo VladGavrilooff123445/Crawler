@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
 
-namespace Application.CrawlerLogic
+namespace Application.Services
 {
     public class TimeEvaluate
     {

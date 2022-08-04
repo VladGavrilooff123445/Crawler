@@ -1,8 +1,8 @@
 ﻿@model Crawler.WebApplication.Models.LinkResult;
 @{
     ViewData["Title"] = "Test result page"; 
-    var sitemapUrls = Model.Links.Where(a => a.InSitemap == true && a.InWebsite == false );
-    var websiteUrls = Model.Links.Where(a => a.InSitemap == false && a.InWebsite == true);
+    var sitemapUrls = Model.Links.Where(a => a.InSitemap == true && a.InWebSite == false );
+    var websiteUrls = Model.Links.Where(a => a.InSitemap == false && a.InWebSite == true);
     
 }
 

@@ -1,4 +1,4 @@
-﻿namespace Application.CrawlerLogic
+﻿namespace Application.Services
 {
     public class Validator
     {

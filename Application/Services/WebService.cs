@@ -2,13 +2,13 @@
 using System.Diagnostics;
 using System.Xml;
 
-namespace Application.CrawlerLogic
+namespace Application.Services
 {
     public class WebService
     {
         private readonly HttpClient _client;  
 
-        public WebService(Stopwatch timer)
+        public WebService()
         {
             _client = new HttpClient();
         }

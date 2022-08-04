@@ -1,4 +1,4 @@
-﻿using Crawler.Data;
+﻿using Domain;
 using System.Collections.Generic;
 
 namespace Crawler.WebApplication.Models

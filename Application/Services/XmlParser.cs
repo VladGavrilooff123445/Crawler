@@ -1,6 +1,7 @@
-﻿using System.Xml;
+﻿using Application.Model;
+using System.Xml;
 
-namespace Application.CrawlerLogic
+namespace Application.Services
 {
     public class XmlParser
     {

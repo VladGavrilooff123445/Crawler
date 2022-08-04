@@ -1,4 +1,6 @@
-﻿namespace Application.CrawlerLogic
+﻿using Application.Model;
+
+namespace Application.Services
 {
     public class HtmlCrawling
     { 
